@@ -32,11 +32,12 @@ This portfolio was inspired by the legendary guide by [JS Legend](https://www.yo
 
 | **Tool**         | **Purpose**                                |
 | ---------------- | ------------------------------------------ |
-| **Kaboom.js**    | Game framework for 2D interactivity        |
+| **Kaplay .js**   | Game framework for 2D interactivity        |
 | **React.js**     | Framework for building reusable components |
 | **HTML/CSS**     | Structure and styling of the portfolio     |
 | **GLSL Shaders** | Create a background for the game           |
-| **Git & GitHub** | Version control and collaboration          |
+| **Git & GitHub** | Version control and databack               |
+| **Jotai**        | Connecting React with Kaplay               |
 
 ---
 

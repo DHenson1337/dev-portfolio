@@ -1,7 +1,14 @@
-export default function makePlayer(k, posVec2, speed) {
-  const DIAGONAL_FACTOR = 0.7071; // Add the missing constant
+import { store } from "../store";
+import {
+  isEmailModalVisibleAtom,
+  isProjectModalVisibleAtom,
+  isSocialModalVisibleAtom,
+} from "../store";
 
-  // Load player animations
+export default function makePlayer(k, posVec2, speed) {
+  const DIAGONAL_FACTOR = 0.7071; // Adjusts diagonal movement speed to be consistent with cardinal directions
+
+  // Load player animations - each sprite sheet has 8 frames horizontally and 6 rows vertically
   k.loadSprite("playerIdle", "./sprites/idle.png", {
     sliceX: 8,
     sliceY: 6,
@@ -41,7 +48,7 @@ export default function makePlayer(k, posVec2, speed) {
     },
   });
 
-  // Add the player object
+  // Initialize the player object with core components and starting state
   const player = k.add([
     k.sprite("playerIdle", { anim: "idleDown" }), // Start with idle animation
     k.scale(8),
@@ -57,9 +64,11 @@ export default function makePlayer(k, posVec2, speed) {
     },
   ]);
 
+  // Mouse/Touch input handling
   let isMouseDown = false;
   const game = document.getElementById("game");
 
+  // Input event listeners
   game.addEventListener("focusout", () => {
     isMouseDown = false;
   });
@@ -76,7 +85,7 @@ export default function makePlayer(k, posVec2, speed) {
     isMouseDown = false;
   });
 
-  // Safe animation play function
+  // Safely handles animation transitions with error catching
   const safePlayAnimation = (animName) => {
     try {
       if (player.sprite && animName) {
@@ -87,8 +96,9 @@ export default function makePlayer(k, posVec2, speed) {
     }
   };
 
+  // Main update loop for player logic
   player.onUpdate(() => {
-    // Camera follow logic
+    // Smooth camera following
     if (!k.getCamPos().eq(player.pos)) {
       k.tween(
         k.getCamPos(),
@@ -99,6 +109,12 @@ export default function makePlayer(k, posVec2, speed) {
       );
     }
 
+    if (
+      store.get(isSocialModalVisibleAtom) ||
+      store.get(isEmailModalVisibleAtom || store.get(isProjectModalVisibleAtom))
+    )
+      return;
+    // Reset and update movement direction
     player.direction = k.vec2(0, 0);
     const worldMousePos = k.toWorld(k.mousePos());
 
@@ -108,71 +124,59 @@ export default function makePlayer(k, posVec2, speed) {
 
     // Handle state changes and animations
     if (player.direction.eq(k.vec2(0, 0))) {
+      // Switch to idle state if not moving
       if (player.currentState !== "idle") {
         player.currentState = "idle";
         player.use(k.sprite("playerIdle"));
-        // Convert walk direction to idle direction
         const idleAnim = player.directionName.replace("walk", "idle");
         safePlayAnimation(idleAnim);
       }
     } else {
+      // Switch to walk state if moving
       if (player.currentState !== "walk") {
         player.currentState = "walk";
         player.use(k.sprite("playerWalk"));
       }
 
-      // Update walking direction
+      // Determine facing direction based on movement vector
       let newDirectionName = "walkDown"; // Default direction
 
-      if (
-        player.direction.x > 0 &&
-        player.direction.y > -0.5 &&
-        player.direction.y < 0.5
-      ) {
-        newDirectionName = "walkBottomRight";
-      } else if (
-        player.direction.x < 0 &&
-        player.direction.y > -0.5 &&
-        player.direction.y < 0.5
-      ) {
-        newDirectionName = "walkDownLeft";
-      } else if (player.direction.x < 0 && player.direction.y < -0.8) {
-        newDirectionName = "walkUp";
-      } else if (player.direction.x < 0 && player.direction.y > 0.8) {
-        newDirectionName = "walkDown";
-      } else if (
-        player.direction.x < 0 &&
-        player.direction.y > -0.8 &&
-        player.direction.y < -0.5
-      ) {
-        newDirectionName = "walkTopLeft";
-      } else if (
-        player.direction.x < 0 &&
-        player.direction.y > 0.5 &&
-        player.direction.y < 0.8
-      ) {
-        newDirectionName = "walkDownLeft";
-      } else if (
-        player.direction.x > 0 &&
-        player.direction.y < -0.5 &&
-        player.direction.y > -0.8
-      ) {
-        newDirectionName = "walkTopRight";
-      } else if (
-        player.direction.x > 0 &&
-        player.direction.y > 0.5 &&
-        player.direction.y < 0.8
-      ) {
-        newDirectionName = "walkBottomRight";
+      // Check vertical movement first
+      if (player.direction.y < -0.5) {
+        // Moving upward
+        if (player.direction.x > 0.5) {
+          newDirectionName = "walkTopRight";
+        } else if (player.direction.x < -0.5) {
+          newDirectionName = "walkTopLeft";
+        } else {
+          newDirectionName = "walkUp";
+        }
+      } else if (player.direction.y > 0.5) {
+        // Moving downward
+        if (player.direction.x > 0.5) {
+          newDirectionName = "walkBottomRight";
+        } else if (player.direction.x < -0.5) {
+          newDirectionName = "walkDownLeft";
+        } else {
+          newDirectionName = "walkDown";
+        }
+      } else {
+        // Moving mostly horizontally
+        if (player.direction.x > 0) {
+          newDirectionName = "walkBottomRight";
+        } else if (player.direction.x < 0) {
+          newDirectionName = "walkDownLeft";
+        }
       }
 
+      // Update animation if direction changed
       if (newDirectionName !== player.directionName) {
         player.directionName = newDirectionName;
         safePlayAnimation(newDirectionName);
       }
     }
 
-    // Movement logic
+    // Apply movement with diagonal adjustment
     if (player.direction.x && player.direction.y) {
       player.move(player.direction.scale(DIAGONAL_FACTOR * speed));
     } else {

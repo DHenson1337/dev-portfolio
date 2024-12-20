@@ -1,7 +1,7 @@
 import { PALETTE } from "./constants";
 import makePlayer from "./entities/Player";
 import makeKaplayCtx from "./kaplayCtx";
-
+import { cameraZoomValueAtom, store } from "./store";
 export default async function initGame() {
   const k = makeKaplayCtx(); // Initialize Kaplay context
 
@@ -50,11 +50,19 @@ export default async function initGame() {
   //Camera Zoom
 
   if (k.width() < 1000) {
+    store.set(cameraZoomValueAtom, 0.5);
     k.setCamScale(k.vec2(0.5));
+
     return;
   } else {
+    store.set(cameraZoomValueAtom, 0.8);
     k.setCamScale(k.vec2(0.8));
   }
+
+  k.onUpdate(() => {
+    const camZoomValue = store.get(cameraZoomValueAtom);
+    if (camZoomValue !== k.camScale()) k.camScale(k.vec2(camZoomValue));
+  });
 
   //Displays the ShaderBackground
   const tiledBackground = k.add([
