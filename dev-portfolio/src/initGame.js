@@ -5,6 +5,12 @@ import makeKaplayCtx from "./kaplayCtx";
 export default async function initGame() {
   const k = makeKaplayCtx(); // Initialize Kaplay context
 
+  //Debugging
+  /*   console.log("Kaplay context:", k);
+  k.loadSprite("testSprite", "./sprites/walk.png");
+  console.log("Test sprite loaded");
+  console.log("All loaded sprites:", k.sprites); */
+
   // Initialize the Player Character
 
   /*   const player = k.add([
@@ -17,7 +23,7 @@ export default async function initGame() {
   // WASD + Multi-Directional Movement Handling
 
   //===========================Logo's=====================
-  k.loadFont("ibm-regular", "./fonts/IBMPlexSans-Regular.ttf");
+  /*   k.loadFont("ibm-regular", "./fonts/IBMPlexSans-Regular.ttf");
   k.loadFont("ibm-bold", "./fonts/IBMPlexSans-Bold.ttf");
   k.loadSprite("github-logo", "./logos/github-logo.png");
   k.loadSprite("linkedin-logo", "./logos/linkedin-logo.png");
@@ -37,17 +43,17 @@ export default async function initGame() {
   k.loadSprite("sonic-js", "./projects/sonic-js.png");
   k.loadSprite("kirby-ts", "./projects/kirby-ts.png");
   k.loadSprite("platformer-js", "./projects/platformer-js.png");
-  k.loadShaderURL("tiledPattern", null, "./shaders/tiledPattern.frag");
+ */
   // Import Shaders
   k.loadShaderURL("tiledPattern", null, "shaders/tiledPattern.frag");
 
   //Camera Zoom
 
   if (k.width() < 1000) {
-    k.camScale(k.vec2(0.5));
+    k.setCamScale(k.vec2(0.5));
     return;
   } else {
-    k.camScale(k.vec2(0.8));
+    k.setCamScale(k.vec2(0.8));
   }
 
   //Displays the ShaderBackground
