@@ -35,6 +35,7 @@ This portfolio was inspired by the legendary guide by [JS Legend](https://www.yo
 | **Kaboom.js**    | Game framework for 2D interactivity        |
 | **React.js**     | Framework for building reusable components |
 | **HTML/CSS**     | Structure and styling of the portfolio     |
+| **GLSL Shaders** | Create a background for the game           |
 | **Git & GitHub** | Version control and collaboration          |
 
 ---

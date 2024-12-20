@@ -1,3 +1,5 @@
+import { PALETTE } from "./constants";
+import makePlayer from "./entities/Player";
 import makeKaplayCtx from "./kaplayCtx";
 
 export default async function initGame() {
@@ -118,5 +120,30 @@ export default async function initGame() {
   k.loadSprite("kirby-ts", "./projects/kirby-ts.png");
   k.loadSprite("platformer-js", "./projects/platformer-js.png");
   k.loadShaderURL("tiledPattern", null, "./shaders/tiledPattern.frag");
-  //TODO: Import Shaders
+  // Import Shaders
+  k.loadShaderURL("tiledPattern", null, "shaders/tiledPattern.frag");
+
+  //Displays the ShaderBackground
+  const tiledBackground = k.add([
+    k.uvquad(k.width(), k.height()),
+    k.shader("tiledPattern", () => ({
+      u_time: k.time() / 20,
+      u_color1: k.Color.fromHex(PALETTE.color3), // Pulls colors from constant.js
+      u_color2: k.Color.fromHex(PALETTE.color2),
+      u_speed: k.vec2(1, -1), // Block Speed
+      u_aspect: k.width() / k.height(), //Width of the display
+      u_size: 5, //Size of each square in the pattern
+    })),
+    k.pos(0), //Position where the tiles start from
+    k.fixed(), //Makes sure game object isn't affect by the Camera
+  ]);
+
+  //Resizes the squares when the aspect ratio changes
+  k.onResize(() => {
+    tiledBackground.width = k.width();
+    tiledBackground.height = k.height();
+    tiledBackground.uniform.u_aspect = k.width() / k.height();
+  });
+
+  makePlayer(k, k.vec2(k.center()), 700); // has the player in the center
 }
