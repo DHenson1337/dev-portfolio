@@ -1,5 +1,6 @@
 import { PALETTE } from "../constants";
 import { emailAtom, isEmailModalVisibleAtom, store } from "../store";
+import { opacityTrickleDown } from "../utils";
 
 import makeIcon from "./Icon";
 
@@ -33,7 +34,7 @@ export default function makeEmailIcon(
     store.set(emailAtom, email);
   });
 
-  //   opacityTrickleDown(parent, [subtitleText, emailSwitch]);
+  opacityTrickleDown(parent, [subtitleText, emailSwitch]);
 
   return emailIcon;
 }

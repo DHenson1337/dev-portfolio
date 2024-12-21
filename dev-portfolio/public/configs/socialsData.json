@@ -1,6 +1,6 @@
 [
   {
-    "pos": { "x": 500, "y": 400 },
+    "pos": { "x": 500, "y": 300 },
     "name": "GitHub",
     "description": "GitHub is where I host my projects.",
     "link": "https://github.com/DHenson1337",
@@ -8,8 +8,8 @@
   },
 
   {
-    "pos": { "x": 700, "y": 400 },
-    "name": "",
+    "pos": { "x": 700, "y": 300 },
+    "name": "Linkedin",
     "description": "Find out more about me on linkedin.",
     "link": "https://www.linkedin.com/in/davon-e-henson/",
     "imageData": {
@@ -20,7 +20,7 @@
   },
 
   {
-    "pos": { "x": 900, "y": 400 },
+    "pos": { "x": 900, "y": 300 },
     "name": "Email",
     "address": "davonhensontech@gmail.com",
     "imageData": {

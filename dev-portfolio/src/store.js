@@ -13,7 +13,7 @@ export const selectedLinkDescriptionAtom = atom("");
 export const isEmailModalVisibleAtom = atom(false);
 
 // Atom to store the entered email value
-export const emailAtom = atom("");
+export const emailAtom = atom("davonhensontech@gmail.com");
 
 // Atom to manage the visibility of the project modal
 export const isProjectModalVisibleAtom = atom(false);

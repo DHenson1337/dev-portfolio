@@ -102,7 +102,7 @@ export default async function initGame() {
   makeSection(
     k,
     k.vec2(k.center().x, k.center().y - 450),
-    "About",
+    generalData.section1Name,
     (parent) => {
       const container = parent.add([k.pos(-805, -700), k.opacity(0)]);
 
@@ -131,7 +131,7 @@ export default async function initGame() {
             socialContainer,
             k.vec2(socialData.pos.x, socialData.pos.y),
             socialData.imageData,
-            socialData.subtitle,
+            socialData.name,
             socialData.email
           );
           continue;
@@ -141,7 +141,7 @@ export default async function initGame() {
           socialContainer,
           k.vec2(socialData.pos.x, socialData.pos.y),
           socialData.imageData,
-          socialData.subtitle,
+          socialData.name,
           socialData.link,
           socialData.description
         );

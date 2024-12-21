@@ -1,9 +1,10 @@
 export const PALETTE = {
-  color1: "#FFD700", // Gold
-  color2: "#0047AB", // Royal Blue (closer to the blue in your image)
-  color3: "#000000", // Pitch Black
+  color1: "#e85fd4", // Text
+  color2: "#0d3270", // Squares
+  color3: "#FFFDD0", //
 };
-
+//#4267a8
+// "#FFFDD0", // Cream
 export const ZOOM_MAX_BOUND = 2;
 export const ZOOM_MIN_BOUND = 0.2;
 // Other Colors I liked

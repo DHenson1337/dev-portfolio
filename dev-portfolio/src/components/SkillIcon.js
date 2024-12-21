@@ -23,7 +23,7 @@ export default function makeSkillIcon(k, parent, posVec2, imageData, subtitle) {
     skillIcon.direction = player.direction;
   });
 
-  //   opacityTrickleDown(parent, [subtitleText]);
+  opacityTrickleDown(parent, [subtitleText]);
 
   return skillIcon;
 }
