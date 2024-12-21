@@ -16,7 +16,7 @@ This portfolio was inspired by the legendary guide by [JS Legend](https://www.yo
 
 ### 🎨 Interactive Design
 
-- Built with **Kaboom.js** to create dynamic visuals and game-like interactivity.
+- Built with **Kplay.js** to create dynamic visuals and game-like interactivity.
 
 ### ⚙️ Customizations
 
@@ -43,7 +43,7 @@ This portfolio was inspired by the legendary guide by [JS Legend](https://www.yo
 
 ## 🧠 What I Learned
 
-- 🔧 How to integrate animations and sprite sheets into **Kaboom.js**.
+- 🔧 How to integrate animations and sprite sheets into **Kplay.js**.
 - ⚛️ Leveraging **React.js** to build dynamic, reusable UI components.
 - 🏗️ Level design principles using both visual tools and scripting.
 - 🥷 Combining guided tutorials with creative experimentation to create something unique.
@@ -61,8 +61,9 @@ This portfolio was inspired by the legendary guide by [JS Legend](https://www.yo
 ## 🏆 Acknowledgments
 
 - 🎥 Huge thanks to [JS Legend](https://www.youtube.com/@jslegend) for the inspiring guide!
-- 🌐 Shoutout to the **Kaboom.js** and **React.js** communities for their amazing resources.
+- 🌐 Shoutout to the **Kplay.js** and **React.js** communities for their amazing resources.
 - 🎒 Thank you [JS Legend](https://sscary.itch.io/the-adventurer-male) for the Main Character Sprite!
+- ⭐ Thank you [Narik](https://soulofkiran.itch.io/pixel-art-animated-star) for the Star Sprite!
 
 ---
 

@@ -1,3 +1,4 @@
+import makeSection from "./components/Section";
 import { PALETTE } from "./constants";
 import makePlayer from "./entities/Player";
 import makeKaplayCtx from "./kaplayCtx";
@@ -23,7 +24,7 @@ export default async function initGame() {
   // WASD + Multi-Directional Movement Handling
 
   //===========================Logo's=====================
-  /*   k.loadFont("ibm-regular", "./fonts/IBMPlexSans-Regular.ttf");
+  k.loadFont("ibm-regular", "./fonts/IBMPlexSans-Regular.ttf");
   k.loadFont("ibm-bold", "./fonts/IBMPlexSans-Bold.ttf");
   k.loadSprite("github-logo", "./logos/github-logo.png");
   k.loadSprite("linkedin-logo", "./logos/linkedin-logo.png");
@@ -43,7 +44,21 @@ export default async function initGame() {
   k.loadSprite("sonic-js", "./projects/sonic-js.png");
   k.loadSprite("kirby-ts", "./projects/kirby-ts.png");
   k.loadSprite("platformer-js", "./projects/platformer-js.png");
- */
+
+  //Star Sprite
+  k.loadSprite("star-sprite", "./sprites/Star.png", {
+    sliceX: 13,
+    sliceY: 1,
+    anims: {
+      spin: {
+        from: 0,
+        to: 12,
+        speed: 5,
+        loop: true,
+      },
+    },
+  });
+
   // Import Shaders
   k.loadShaderURL("tiledPattern", null, "shaders/tiledPattern.frag");
 
@@ -61,7 +76,7 @@ export default async function initGame() {
 
   k.onUpdate(() => {
     const camZoomValue = store.get(cameraZoomValueAtom);
-    if (camZoomValue !== k.camScale()) k.camScale(k.vec2(camZoomValue));
+    if (camZoomValue !== k.getCamScale()) k.setCamScale(k.vec2(camZoomValue));
   });
 
   //Displays the ShaderBackground
@@ -86,6 +101,43 @@ export default async function initGame() {
     tiledBackground.height = k.height();
     tiledBackground.uniform.u_aspect = k.width() / k.height();
   });
+
+  //=============Creates the sections in the kplay view==============
+  // add rect, after section name if you're square ex:
+  // "rect",  Specify the shape as "rect" (square)
+  //   200  Size of the square (e.g., 200x200)
+
+  // About
+  makeSection(
+    k,
+    k.vec2(k.center().x, k.center().y - 450),
+    "About",
+    (parent) => {}
+  );
+
+  //Skills
+  makeSection(
+    k,
+    k.vec2(k.center().x - 450, k.center().y),
+    "Skills",
+    (parent) => {}
+  );
+
+  //Experience
+  makeSection(
+    k,
+    k.vec2(k.center().x + 450, k.center().y),
+    "Experience",
+    (parent) => {}
+  );
+
+  //Projects
+  makeSection(
+    k,
+    k.vec2(k.center().x, k.center().y + 450),
+    "Projects",
+    (parent) => {}
+  );
 
   makePlayer(k, k.vec2(k.center()), 700); // has the player in the center
 }

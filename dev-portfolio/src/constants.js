@@ -1,5 +1,5 @@
 export const PALETTE = {
-  color1: "#FFFFFF", // Gold
+  color1: "#FFD700", // Gold
   color2: "#0047AB", // Royal Blue (closer to the blue in your image)
   color3: "#000000", // Pitch Black
 };
