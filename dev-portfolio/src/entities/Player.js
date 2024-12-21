@@ -15,9 +15,11 @@ export default function makePlayer(k, posVec2, speed) {
     anims: {
       idleDown: { from: 0, to: 7, loop: true },
       idleDownLeft: { from: 8, to: 15, loop: true },
+      idleLeft: { from: 8, to: 15, loop: true },
       idleTopLeft: { from: 16, to: 23, loop: true },
       idleUp: { from: 24, to: 31, loop: true },
       idleTopRight: { from: 32, to: 39, loop: true },
+      idleRight: { from: 40, to: 47, loop: true },
       idleBottomRight: { from: 40, to: 47, loop: true },
     },
   });
@@ -28,9 +30,11 @@ export default function makePlayer(k, posVec2, speed) {
     anims: {
       walkDown: { from: 0, to: 7, loop: true },
       walkDownLeft: { from: 8, to: 15, loop: true },
+      walkLeft: { from: 8, to: 15, loop: true },
       walkTopLeft: { from: 16, to: 23, loop: true },
       walkUp: { from: 24, to: 31, loop: true },
       walkTopRight: { from: 32, to: 39, loop: true },
+      walkRight: { from: 40, to: 47, loop: true },
       walkBottomRight: { from: 40, to: 47, loop: true },
     },
   });
@@ -41,9 +45,11 @@ export default function makePlayer(k, posVec2, speed) {
     anims: {
       dashDown: { from: 0, to: 7, loop: true },
       dashDownLeft: { from: 8, to: 15, loop: true },
+      dashLeft: { from: 8, to: 15, loop: true },
       dashTopLeft: { from: 16, to: 23, loop: true },
       dashUp: { from: 24, to: 31, loop: true },
       dashTopRight: { from: 32, to: 39, loop: true },
+      dashRight: { from: 40, to: 47, loop: true },
       dashBottomRight: { from: 40, to: 47, loop: true },
     },
   });
@@ -59,10 +65,14 @@ export default function makePlayer(k, posVec2, speed) {
     "player",
     {
       direction: k.vec2(0, 0),
-      directionName: "idleDown", // Start with idle direction
+      directionName: "idleDown",
       currentState: "idle",
+      lastValidDirection: k.vec2(0, 1), // Track last direction for idle animations
     },
   ]);
+
+  // Minimum distance threshold to prevent jittery movement when mouse is near player
+  const MIN_MOVEMENT_THRESHOLD = 5;
 
   // Mouse/Touch input handling
   let isMouseDown = false;
@@ -96,6 +106,33 @@ export default function makePlayer(k, posVec2, speed) {
     }
   };
 
+  // Determine the correct animation based on movement direction
+  const getDirectionName = (direction, isMoving) => {
+    const prefix = isMoving ? "walk" : "idle";
+
+    // Handle pure horizontal movement
+    if (Math.abs(direction.y) < 0.3) {
+      if (direction.x > 0) return `${prefix}Right`;
+      if (direction.x < 0) return `${prefix}Left`;
+    }
+
+    // Handle vertical and diagonal movement
+    if (direction.y < -0.3) {
+      // Moving upward
+      if (direction.x > 0.3) return `${prefix}TopRight`;
+      if (direction.x < -0.3) return `${prefix}TopLeft`;
+      return `${prefix}Up`;
+    } else if (direction.y > 0.3) {
+      // Moving downward
+      if (direction.x > 0.3) return `${prefix}BottomRight`;
+      if (direction.x < -0.3) return `${prefix}DownLeft`;
+      return `${prefix}Down`;
+    }
+
+    // Default case
+    return `${prefix}Down`;
+  };
+
   // Main update loop for player logic
   player.onUpdate(() => {
     // Smooth camera following
@@ -109,27 +146,44 @@ export default function makePlayer(k, posVec2, speed) {
       );
     }
 
+    // Skip updates if modals are visible
     if (
       store.get(isSocialModalVisibleAtom) ||
-      store.get(isEmailModalVisibleAtom || store.get(isProjectModalVisibleAtom))
-    )
+      store.get(isEmailModalVisibleAtom) ||
+      store.get(isProjectModalVisibleAtom)
+    ) {
       return;
-    // Reset and update movement direction
+    }
+
+    // Calculate movement direction and distance
     player.direction = k.vec2(0, 0);
     const worldMousePos = k.toWorld(k.mousePos());
+    const directionVector = worldMousePos.sub(player.pos);
+    const distance = directionVector.len();
 
-    if (isMouseDown) {
-      player.direction = worldMousePos.sub(player.pos).unit();
+    // Only move if mouse is pressed and beyond minimum threshold
+    if (isMouseDown && distance > MIN_MOVEMENT_THRESHOLD) {
+      player.direction = directionVector.unit();
+      player.lastValidDirection = player.direction;
     }
 
     // Handle state changes and animations
-    if (player.direction.eq(k.vec2(0, 0))) {
+    const isMoving = !player.direction.eq(k.vec2(0, 0));
+
+    if (!isMoving) {
       // Switch to idle state if not moving
       if (player.currentState !== "idle") {
         player.currentState = "idle";
         player.use(k.sprite("playerIdle"));
-        const idleAnim = player.directionName.replace("walk", "idle");
-        safePlayAnimation(idleAnim);
+      }
+      // Use last valid direction for idle animation
+      const newDirectionName = getDirectionName(
+        player.lastValidDirection,
+        false
+      );
+      if (newDirectionName !== player.directionName) {
+        player.directionName = newDirectionName;
+        safePlayAnimation(newDirectionName);
       }
     } else {
       // Switch to walk state if moving
@@ -137,39 +191,8 @@ export default function makePlayer(k, posVec2, speed) {
         player.currentState = "walk";
         player.use(k.sprite("playerWalk"));
       }
-
-      // Determine facing direction based on movement vector
-      let newDirectionName = "walkDown"; // Default direction
-
-      // Check vertical movement first
-      if (player.direction.y < -0.5) {
-        // Moving upward
-        if (player.direction.x > 0.5) {
-          newDirectionName = "walkTopRight";
-        } else if (player.direction.x < -0.5) {
-          newDirectionName = "walkTopLeft";
-        } else {
-          newDirectionName = "walkUp";
-        }
-      } else if (player.direction.y > 0.5) {
-        // Moving downward
-        if (player.direction.x > 0.5) {
-          newDirectionName = "walkBottomRight";
-        } else if (player.direction.x < -0.5) {
-          newDirectionName = "walkDownLeft";
-        } else {
-          newDirectionName = "walkDown";
-        }
-      } else {
-        // Moving mostly horizontally
-        if (player.direction.x > 0) {
-          newDirectionName = "walkBottomRight";
-        } else if (player.direction.x < 0) {
-          newDirectionName = "walkDownLeft";
-        }
-      }
-
-      // Update animation if direction changed
+      // Update walking animation direction
+      const newDirectionName = getDirectionName(player.direction, true);
       if (newDirectionName !== player.directionName) {
         player.directionName = newDirectionName;
         safePlayAnimation(newDirectionName);
