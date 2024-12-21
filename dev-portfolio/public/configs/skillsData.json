@@ -1,0 +1,83 @@
+[
+  {
+    "pos": { "x": 0, "y": 0 },
+    "name": "JavaScript",
+    "logoData": {
+      "name": "javascript-logo",
+      "width": 128,
+      "height": 128
+    }
+  },
+  {
+    "pos": { "x": -200, "y": 0 },
+    "name": "Phaser",
+    "logoData": {
+      "name": "phaser-logo",
+      "width": 128,
+      "height": 128
+    }
+  },
+  {
+    "pos": { "x": 0, "y": -200 },
+    "name": "React",
+    "logoData": {
+      "name": "react-logo",
+      "width": 148,
+      "height": 128
+    }
+  },
+  {
+    "pos": { "x": 0, "y": 200 },
+    "name": "Bootstrap",
+    "logoData": {
+      "name": "bootstrap-logo",
+      "width": 128,
+      "height": 128
+    }
+  },
+  {
+    "pos": { "x": -200, "y": 200 },
+    "name": "mongoDB",
+    "logoData": {
+      "name": "mongodb-logo",
+      "width": 128,
+      "height": 128
+    }
+  },
+  {
+    "pos": { "x": -200, "y": -200 },
+    "name": "HTML",
+    "logoData": {
+      "name": "html-logo",
+      "width": 128,
+      "height": 128
+    }
+  },
+  {
+    "pos": { "x": -400, "y": -200 },
+    "name": "CSS",
+    "logoData": {
+      "name": "css-logo",
+      "width": 128,
+      "height": 128
+    }
+  },
+  {
+    "pos": { "x": -400, "y": 0 },
+    "name": "node.js",
+    "logoData": {
+      "name": "nodejs-logo",
+      "width": 140,
+      "height": 110
+    }
+  },
+  {
+    "pos": { "x": -400, "y": 200 },
+    "name": "Mern Stack",
+    "logoData": {
+      "name": "mernstack-logo",
+      "width": 128,
+      "height": 128
+    }
+  }
+]

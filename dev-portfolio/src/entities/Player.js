@@ -61,7 +61,7 @@ export default function makePlayer(k, posVec2, speed) {
     k.anchor("center"),
     //(Top left corner relative to player position
     // X & Y)
-    k.area({ shape: new k.Rect(k.vec2(0), 10, 20) }),
+    k.area({ shape: new k.Rect(k.vec2(0), 5, 15) }),
 
     k.body(),
     k.pos(posVec2),

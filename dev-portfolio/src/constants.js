@@ -1,5 +1,5 @@
 export const PALETTE = {
-  color1: "#e85fd4", // Text
+  color1: "#000000", // Text
   color2: "#0d3270", // Squares
   color3: "#FFFDD0", //
 };

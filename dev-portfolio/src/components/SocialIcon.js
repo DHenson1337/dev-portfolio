@@ -41,7 +41,7 @@ export default function makeSocialIcon(
     store.set(selectedLinkDescriptionAtom, description);
   });
 
-  opacityTrickleDown(parent, [subtitleText, linkSwitch]);
+  opacityTrickleDown(parent, [subtitleText, subtitleText]);
 
   return socialIcon;
 }

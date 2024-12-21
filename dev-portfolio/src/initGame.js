@@ -1,5 +1,6 @@
 import makeEmailIcon from "./components/EmailIcon";
 import makeSection from "./components/Section";
+import makeSkillIcon from "./components/SkillIcon";
 import makeSocialIcon from "./components/SocialIcon";
 import { PALETTE } from "./constants";
 import makePlayer from "./entities/Player";
@@ -10,6 +11,7 @@ export default async function initGame() {
   //Importing configs for info about the game tiles
   const generalData = await (await fetch("./configs/generalData.json")).json();
   const socialsData = await (await fetch("./configs/socialsData.json")).json();
+  const skillsData = await (await fetch("./configs/skillsData.json")).json();
 
   const k = makeKaplayCtx(); // Initialize Kaplay context
 
@@ -22,6 +24,11 @@ export default async function initGame() {
   k.loadSprite("x-logo", "./logos/x-logo.png");
   k.loadSprite("substack-logo", "./logos/substack-logo.png");
   k.loadSprite("javascript-logo", "./logos/js-logo.png");
+  k.loadSprite("phaser-logo", "./logos/phaser-logo.png");
+  k.loadSprite("bootstrap-logo", "./logos/bootstrap-logo.png");
+  k.loadSprite("mongodb-logo", "./logos/mongodb-logo.png");
+  k.loadSprite("nodejs-logo", "./logos/nodejs-logo.png");
+  k.loadSprite("mernstack-logo", "./logos/mernstack-logo.png");
   k.loadSprite("typescript-logo", "./logos/ts-logo.png");
   k.loadSprite("react-logo", "./logos/react-logo.png");
   k.loadSprite("nextjs-logo", "./logos/nextjs-logo.png");
@@ -98,7 +105,7 @@ export default async function initGame() {
   // "rect",  Specify the shape as "rect" (square)
   //   200  Size of the square (e.g., 200x200)
 
-  // About
+  // About =============================
   makeSection(
     k,
     k.vec2(k.center().x, k.center().y - 450),
@@ -151,15 +158,28 @@ export default async function initGame() {
     }
   );
 
-  //Skills
+  //Skills ==============================================
   makeSection(
     k,
     k.vec2(k.center().x - 450, k.center().y),
-    "Skills",
-    (parent) => {}
+    generalData.section2Name,
+    (parent) => {
+      const container = parent.add([k.opacity(0), k.pos(-300, 0)]);
+
+      for (const skillData of skillsData) {
+        makeSkillIcon(
+          k,
+          container,
+          k.vec2(skillData.pos.x, skillData.pos.y),
+          skillData.logoData,
+          skillData.name
+        );
+      }
+      makeAppear(k, container);
+    }
   );
 
-  //Experience
+  //Experience==========================================
   makeSection(
     k,
     k.vec2(k.center().x + 450, k.center().y),
