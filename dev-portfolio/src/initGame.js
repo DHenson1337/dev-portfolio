@@ -1,27 +1,17 @@
+import makeEmailIcon from "./components/EmailIcon";
 import makeSection from "./components/Section";
+import makeSocialIcon from "./components/SocialIcon";
 import { PALETTE } from "./constants";
 import makePlayer from "./entities/Player";
 import makeKaplayCtx from "./kaplayCtx";
 import { cameraZoomValueAtom, store } from "./store";
+import { makeAppear } from "./utils";
 export default async function initGame() {
+  //Importing configs for info about the game tiles
+  const generalData = await (await fetch("./configs/generalData.json")).json();
+  const socialsData = await (await fetch("./configs/socialsData.json")).json();
+
   const k = makeKaplayCtx(); // Initialize Kaplay context
-
-  //Debugging
-  /*   console.log("Kaplay context:", k);
-  k.loadSprite("testSprite", "./sprites/walk.png");
-  console.log("Test sprite loaded");
-  console.log("All loaded sprites:", k.sprites); */
-
-  // Initialize the Player Character
-
-  /*   const player = k.add([
-    k.sprite("playerIdle"), // Use idle sprite by default
-    k.pos(100, 100), // Starting position
-    k.area(), // Collision area
-    k.body(), // Physics for movement and collisions
-  ]); */
-
-  // WASD + Multi-Directional Movement Handling
 
   //===========================Logo's=====================
   k.loadFont("ibm-regular", "./fonts/IBMPlexSans-Regular.ttf");
@@ -41,6 +31,7 @@ export default async function initGame() {
   k.loadSprite("tailwind-logo", "./logos/tailwind-logo.png");
   k.loadSprite("python-logo", "./logos/python-logo.png");
   k.loadSprite("email-logo", "./logos/email-logo.png");
+  k.loadSprite("Api", "./logos/Api.png");
   k.loadSprite("sonic-js", "./projects/sonic-js.png");
   k.loadSprite("kirby-ts", "./projects/kirby-ts.png");
   k.loadSprite("platformer-js", "./projects/platformer-js.png");
@@ -112,7 +103,52 @@ export default async function initGame() {
     k,
     k.vec2(k.center().x, k.center().y - 450),
     "About",
-    (parent) => {}
+    (parent) => {
+      const container = parent.add([k.pos(-805, -700), k.opacity(0)]);
+
+      container.add([
+        k.text(generalData.header.title, { font: "ibm-bold", size: 88 }),
+        k.color(k.Color.fromHex(PALETTE.color1)),
+        k.pos(395, 0),
+        k.opacity(0),
+      ]);
+
+      container.add([
+        k.text(generalData.header.subtitle, {
+          font: "ibm-bold",
+          size: 48,
+        }),
+        k.color(k.Color.fromHex(PALETTE.color1)),
+        k.pos(485, 100),
+        k.opacity(0),
+      ]);
+      const socialContainer = container.add([k.pos(130, 0), k.opacity(0)]);
+
+      for (const socialData of socialsData) {
+        if (socialData.name === "Email") {
+          makeEmailIcon(
+            k,
+            socialContainer,
+            k.vec2(socialData.pos.x, socialData.pos.y),
+            socialData.imageData,
+            socialData.subtitle,
+            socialData.email
+          );
+          continue;
+        }
+        makeSocialIcon(
+          k,
+          socialContainer,
+          k.vec2(socialData.pos.x, socialData.pos.y),
+          socialData.imageData,
+          socialData.subtitle,
+          socialData.link,
+          socialData.description
+        );
+      }
+      makeAppear(k, container);
+      makeAppear(k, socialContainer);
+    }
   );
 
   //Skills
@@ -138,6 +174,23 @@ export default async function initGame() {
     "Projects",
     (parent) => {}
   );
+
+  /* // Joke API
+  makeSection(
+    k,
+    k.vec2(k.center().x - 550, k.center().y - 750),
+    "Joke Api",
+
+    {
+      style: "rect",
+      iconSprite: "Api",
+      iconScale: 0.4,
+      customColor: PALETTE.color3,
+    },
+    (parent) => {
+      const container = parent.add([k.pos(-805, -700), k.opacity(0)]);
+    }
+  ); */
 
   makePlayer(k, k.vec2(k.center()), 700); // has the player in the center
 }

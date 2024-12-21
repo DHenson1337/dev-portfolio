@@ -1,20 +1,21 @@
+import { useState } from "react";
 import { useAtom, useAtomValue } from "jotai";
-import React, { useState } from "react";
-import { emailAtom, isEmailModalVisibleAtom } from "../store";
+import { isEmailModalVisibleAtom, emailAtom } from "../store";
 
-function EmailModal() {
+export default function EmailModal() {
   const [isVisible, setIsVisible] = useAtom(isEmailModalVisibleAtom);
-  const email = useAtomValue(emailAtom);
+  // const email = useAtomValue(emailAtom);
+  const email = "davonhensonTech@gmail.com";
 
   const [onCopyMessage, setOnCopyMessage] = useState("");
+
   const buttons = [
     {
       id: 0,
       name: "Yes",
       handler: () => {
-        //Navigator Api
         navigator.clipboard.writeText(email);
-        setOnCopyMessage("Email copied to clipboard");
+        setOnCopyMessage("Email copied to clipboard!");
       },
     },
     {
@@ -30,9 +31,9 @@ function EmailModal() {
     isVisible && (
       <div className="modal">
         <div className="modal-content">
-          <h1>Do you want to open this link?</h1>
-          <span>{selectedLink}</span>
-          <p>{selectedLinkDescription}</p>
+          <h1>Copy my email to your clipboard?</h1>
+          <span>{email}</span>
+          <p>{onCopyMessage}</p>
           <div className="modal-btn-container">
             {buttons.map((button) => (
               <button
@@ -49,5 +50,3 @@ function EmailModal() {
     )
   );
 }
-
-export default EmailModal;

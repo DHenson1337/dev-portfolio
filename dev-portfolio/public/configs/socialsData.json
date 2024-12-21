@@ -1,0 +1,32 @@
+[
+  {
+    "pos": { "x": 500, "y": 400 },
+    "name": "GitHub",
+    "description": "GitHub is where I host my projects.",
+    "link": "https://github.com/DHenson1337",
+    "imageData": { "name": "github-logo", "width": 228.6, "height": 179.5 }
+  },
+
+  {
+    "pos": { "x": 700, "y": 400 },
+    "name": "",
+    "description": "Find out more about me on linkedin.",
+    "link": "https://www.linkedin.com/in/davon-e-henson/",
+    "imageData": {
+      "name": "linkedin-logo",
+      "width": 128,
+      "height": 128
+    }
+  },
+
+  {
+    "pos": { "x": 900, "y": 400 },
+    "name": "Email",
+    "address": "davonhensontech@gmail.com",
+    "imageData": {
+      "name": "email-logo",
+      "width": 128,
+      "height": 128
+    }
+  }
+]
