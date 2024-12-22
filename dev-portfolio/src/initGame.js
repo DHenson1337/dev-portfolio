@@ -60,7 +60,9 @@ export default async function initGame() {
   k.loadSprite("kirby-ts", "./projects/kirby-ts.png");
   k.loadSprite("platformer-js", "./projects/platformer-js.png");
   k.loadSprite("wip", "./projects/wip.png");
-
+  //Audio
+  k.loadSound("walk", "./sounds/walk.wav");
+  k.loadSound("collision", "./sounds/collision.ogg");
   //Star Sprite
   k.loadSprite("star-sprite", "./sprites/Star.png", {
     sliceX: 13,

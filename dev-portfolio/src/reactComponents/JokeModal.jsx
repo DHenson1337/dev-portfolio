@@ -35,7 +35,7 @@ export default function JokeModal() {
               }}
             >
               {" "}
-              Wan't Another?
+              Want Another?
             </button>
             <button
               className="modal-btn"

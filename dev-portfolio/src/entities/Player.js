@@ -8,6 +8,18 @@ import {
 } from "../store";
 
 export default function makePlayer(k, posVec2, speed) {
+  //Sound initialization
+  let isWalkingSoundPlaying = false;
+  const walkSound = k.play("walk", {
+    volume: 0.018,
+    loop: true,
+    paused: true,
+    speed: 0.69,
+  });
+
+  //Load collision
+  k.loadSound("collision", "./sounds/collision.ogg");
+
   const DIAGONAL_FACTOR = 0.7071; // Adjusts diagonal movement speed to be consistent with cardinal directions
 
   // Load player animations - each sprite sheet has 8 frames horizontally and 6 rows vertically
@@ -140,6 +152,24 @@ export default function makePlayer(k, posVec2, speed) {
 
   // Main update loop for player logic
   player.onUpdate(() => {
+    //Checks if any modal is open
+
+    const isModalOpen =
+      store.get(isSocialModalVisibleAtom) ||
+      store.get(isEmailModalVisibleAtom) ||
+      store.get(isProjectModalVisibleAtom) ||
+      store.get(isJokeModalVisibleAtom) ||
+      store.get(isCreditsModalVisibleAtom);
+
+    //Stops walking sound if a modal is open
+    if (isModalOpen) {
+      if (isWalkingSoundPlaying) {
+        walkSound.paused = true;
+        isWalkingSoundPlaying = false;
+      }
+      return;
+    }
+
     // Smooth camera following
     if (!k.getCamPos().eq(player.pos)) {
       k.tween(
@@ -177,6 +207,20 @@ export default function makePlayer(k, posVec2, speed) {
     // Handle state changes and animations
     const isMoving = !player.direction.eq(k.vec2(0, 0));
 
+    //Walking sound
+
+    if (isMoving) {
+      if (!isWalkingSoundPlaying) {
+        walkSound.paused = false;
+        isWalkingSoundPlaying = true;
+      }
+    } else {
+      if (isWalkingSoundPlaying) {
+        walkSound.paused = true;
+        isWalkingSoundPlaying = false;
+      }
+    }
+
     if (!isMoving) {
       // Switch to idle state if not moving
       if (player.currentState !== "idle") {
@@ -212,6 +256,14 @@ export default function makePlayer(k, posVec2, speed) {
     } else {
       player.move(player.direction.scale(speed));
     }
+  });
+
+  // Collision Sounds Handler
+  player.onCollide("collider", () => {
+    k.play("collision", {
+      volume: 0.4,
+      speed: 1.0,
+    });
   });
 
   return player;

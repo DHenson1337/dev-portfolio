@@ -9,6 +9,7 @@ export default function makeSection(k, posVec2, sectionName, onCollide = null) {
     k.pos(posVec2),
     k.color(PALETTE.color1),
     k.opacity(0), // Make rectangle invisible
+    "collider", // Add this tag for collision detection
     sectionName,
   ]);
 
