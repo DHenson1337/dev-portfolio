@@ -1,9 +1,16 @@
-// Cyber Blue Theme (Classic MMBN)
+//Fav Color set
 export const PALETTE = {
-  color1: "#00ffff", // Bright cyan
-  color2: "#000033", // Deep navy
-  color3: "#000000", // Black
+  color1: "#000000", //
+  color2: "#0077b6", //
+  color3: "#FFFDD0", //
 };
+
+/* // Cyber Blue Theme (Classic MMBN)
+export const PALETTE = {
+  color1: "#0077b6", // Strong blue
+  color2: "#03045e", // Deep blue
+  color3: "#000000", // Black
+}; */
 //Fav Color set
 /* export const PALETTE = {
   color1: "#000000", // Text

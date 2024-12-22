@@ -13,7 +13,7 @@ export const selectedLinkDescriptionAtom = atom("");
 export const isEmailModalVisibleAtom = atom(false);
 
 // Atom to store the entered email value
-export const emailAtom = atom("davonhensontech@gmail.com");
+export const emailAtom = atom("");
 
 // Atom to manage the visibility of the project modal
 export const isProjectModalVisibleAtom = atom(false);
@@ -28,3 +28,7 @@ export const chosenProjectDataAtom = atom({
 export const cameraZoomValueAtom = atom({ value: 1 });
 
 export const store = createStore();
+
+//For Joke Modal
+export const isJokeModalVisibleAtom = atom(false);
+export const jokeDataAtom = atom({ setup: "", delivery: "" });

@@ -7,7 +7,12 @@ import makeWorkExperienceCard from "./components/WorkExperienceCard";
 import { PALETTE } from "./constants";
 import makePlayer from "./entities/Player";
 import makeKaplayCtx from "./kaplayCtx";
-import { cameraZoomValueAtom, store } from "./store";
+import {
+  cameraZoomValueAtom,
+  jokeDataAtom,
+  isJokeModalVisibleAtom,
+  store,
+} from "./store";
 import { makeAppear } from "./utils";
 export default async function initGame() {
   //Importing configs for info about the game tiles
@@ -87,16 +92,15 @@ export default async function initGame() {
   });
 
   //Displays the ShaderBackground
-  //Displays the ShaderBackground
   const tiledBackground = k.add([
     k.uvquad(k.width(), k.height()),
     k.shader("tiledPattern", () => ({
-      u_time: k.time() / 10, // Changed from /20 to /10 for faster animation
+      u_time: k.time() / 25, // Changed from /20 to /10 for faster animation
       u_color1: k.Color.fromHex(PALETTE.color3),
       u_color2: k.Color.fromHex(PALETTE.color2),
       u_speed: k.vec2(0.5, -1.0), // Changed from (1, -1) for different flow
       u_aspect: k.width() / k.height(),
-      u_size: 6, // Changed from 5 for different density
+      u_size: 5, // Changed from 5 for different density
     })),
     k.pos(0),
     k.z(0),
@@ -230,15 +234,45 @@ export default async function initGame() {
     }
   );
 
-  //=========================================================
-  /* // Joke API
-    makeSection(
+  //Joke API=========================================================
+  makeSection(
     k,
-    k.vec2(k.center().x, k.center().y + 450),
-    "Projects",
-    (parent) => {}
+    k.vec2(k.center().x - 450, k.center().y - 800),
+    "Want a Joke?",
+    async (parent) => {
+      const container = parent.add([k.opacity(0), k.pos(0, 0)]);
+
+      try {
+        const respone = await fetch(
+          "https://v2.jokeapi.dev/joke/Programming,Pun?blacklistFlags=nsfw,religious,political,racist,sexist,explicit&type=twopart"
+        );
+        const jokeData = await respone.json();
+
+        //Store the initial Joke
+        store.set(jokeDataAtom, {
+          setup: jokeData.setup,
+          delivery: jokeData.delivery,
+        });
+
+        // Show modal on collision
+        const jokeSwitch = container.add([
+          k.circle(30),
+          k.area(),
+          k.color(k.Color.fromHex(PALETTE.color1)),
+          k.pos(0, 0),
+          k.opacity(0),
+        ]);
+
+        jokeSwitch.onCollide("player", () => {
+          store.set(isJokeModalVisibleAtom, true);
+        });
+
+        makeAppear(k, container);
+      } catch (error) {
+        console.error("Error fetching joke:", error);
+      }
+    }
   );
- */
 
   makePlayer(k, k.vec2(k.center()), 700); // has the player in the center
 }

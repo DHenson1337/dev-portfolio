@@ -3,6 +3,7 @@ import {
   isEmailModalVisibleAtom,
   isProjectModalVisibleAtom,
   isSocialModalVisibleAtom,
+  isJokeModalVisibleAtom,
 } from "../store";
 
 export default function makePlayer(k, posVec2, speed) {
@@ -153,7 +154,8 @@ export default function makePlayer(k, posVec2, speed) {
     if (
       store.get(isSocialModalVisibleAtom) ||
       store.get(isEmailModalVisibleAtom) ||
-      store.get(isProjectModalVisibleAtom)
+      store.get(isProjectModalVisibleAtom) ||
+      store.get(isJokeModalVisibleAtom)
     ) {
       return;
     }

@@ -2,6 +2,7 @@ import CameraController from "./reactComponents/CameraController";
 import SocialModal from "./reactComponents/SocialModal";
 import EmailModal from "./reactComponents/EmailModal";
 import ProjectModal from "./reactComponents/ProjectModal";
+import JokeModal from "./reactComponents/JokeModal";
 
 function ReactUI() {
   return (
@@ -11,6 +12,7 @@ function ReactUI() {
       <SocialModal />
       <EmailModal />
       <ProjectModal />
+      <JokeModal />
     </>
   );
 }
