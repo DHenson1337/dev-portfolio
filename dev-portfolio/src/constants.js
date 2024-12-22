@@ -1,8 +1,15 @@
+// Cyber Blue Theme (Classic MMBN)
 export const PALETTE = {
+  color1: "#00ffff", // Bright cyan
+  color2: "#000033", // Deep navy
+  color3: "#000000", // Black
+};
+//Fav Color set
+/* export const PALETTE = {
   color1: "#000000", // Text
   color2: "#0d3270", // Squares
   color3: "#FFFDD0", //
-};
+}; */
 //#4267a8
 // "#FFFDD0", // Cream
 export const ZOOM_MAX_BOUND = 2;

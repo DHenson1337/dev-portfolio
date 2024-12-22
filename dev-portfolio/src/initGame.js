@@ -87,19 +87,20 @@ export default async function initGame() {
   });
 
   //Displays the ShaderBackground
+  //Displays the ShaderBackground
   const tiledBackground = k.add([
     k.uvquad(k.width(), k.height()),
     k.shader("tiledPattern", () => ({
-      u_time: k.time() / 20,
-      u_color1: k.Color.fromHex(PALETTE.color3), // Pulls colors from constant.js
+      u_time: k.time() / 10, // Changed from /20 to /10 for faster animation
+      u_color1: k.Color.fromHex(PALETTE.color3),
       u_color2: k.Color.fromHex(PALETTE.color2),
-      u_speed: k.vec2(1, -1), // Block Speed
-      u_aspect: k.width() / k.height(), //Width of the display
-      u_size: 5, //Size of each square in the pattern
+      u_speed: k.vec2(0.5, -1.0), // Changed from (1, -1) for different flow
+      u_aspect: k.width() / k.height(),
+      u_size: 6, // Changed from 5 for different density
     })),
-    k.pos(0), //Position where the tiles start from
-    k.z(0), // Explicit z-index for background
-    k.fixed(), //Makes sure game object isn't affect by the Camera
+    k.pos(0),
+    k.z(0),
+    k.fixed(),
   ]);
 
   //Resizes the squares when the aspect ratio changes
