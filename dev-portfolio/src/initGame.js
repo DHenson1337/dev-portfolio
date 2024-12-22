@@ -309,7 +309,8 @@ export default async function initGame() {
           store.set(isCreditsModalVisibleAtom, true);
         });
 
-        opacityTrickleDown(parent, [creditsSwitch]);
+        opacityTrickleDown(container, [creditsSwitch]);
+        //opacityTrickleDown(parent, [creditsSwitch]) if I want the dot to be invisible
         makeAppear(k, container);
       } catch (error) {
         console.error("Error loading credits:", error);

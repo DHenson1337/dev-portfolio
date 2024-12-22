@@ -261,7 +261,7 @@ export default function makePlayer(k, posVec2, speed) {
   // Collision Sounds Handler
   player.onCollide("collider", () => {
     k.play("collision", {
-      volume: 0.4,
+      volume: 0.3,
       speed: 1.0,
     });
   });
