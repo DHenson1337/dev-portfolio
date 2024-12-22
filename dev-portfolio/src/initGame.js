@@ -249,15 +249,20 @@ export default async function initGame() {
       const container = parent.add([k.opacity(0), k.pos(0, 0)]);
 
       try {
-        const respone = await fetch(
+        const response = await fetch(
           "https://v2.jokeapi.dev/joke/Programming,Pun?blacklistFlags=nsfw,religious,political,racist,sexist,explicit&type=twopart"
         );
-        const jokeData = await respone.json();
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch joke");
+        }
+
+        const jokeData = await response.json();
 
         //Store the initial Joke
         store.set(jokeDataAtom, {
-          setup: jokeData.setup,
-          delivery: jokeData.delivery,
+          setup: "Why did the programmer quit his job?", // Default joke if API fails
+          delivery: "Because he didn't get arrays!",
         });
 
         // Show modal on collision
@@ -273,9 +278,33 @@ export default async function initGame() {
           store.set(isJokeModalVisibleAtom, true);
         });
 
+        opacityTrickleDown(container, [jokeSwitch]);
         makeAppear(k, container);
       } catch (error) {
         console.error("Error fetching joke:", error);
+
+        // Store a fallback joke
+        store.set(jokeDataAtom, {
+          setup: "Looks like our joke API is taking a coffee break! ☕",
+          delivery:
+            "But here's a classic: Why do programmers prefer dark mode? Because light attracts bugs! 🐛",
+        });
+
+        // Still create the interaction point even if API fails
+        const jokeSwitch = container.add([
+          k.circle(30),
+          k.area(),
+          k.color(k.Color.fromHex(PALETTE.color1)),
+          k.pos(0, 0),
+          k.opacity(0),
+        ]);
+
+        jokeSwitch.onCollide("player", () => {
+          store.set(isJokeModalVisibleAtom, true);
+        });
+
+        opacityTrickleDown(container, [jokeSwitch]);
+        makeAppear(k, container);
       }
     }
   );
