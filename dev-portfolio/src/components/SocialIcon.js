@@ -1,12 +1,11 @@
 import { PALETTE } from "../constants";
-import { opacityTrickleDown } from "../utils";
 import {
   isSocialModalVisibleAtom,
   selectedLinkAtom,
   selectedLinkDescriptionAtom,
   store,
 } from "../store";
-
+import { opacityTrickleDown } from "../utils";
 import makeIcon from "./Icon";
 
 export default function makeSocialIcon(
@@ -41,7 +40,7 @@ export default function makeSocialIcon(
     store.set(selectedLinkDescriptionAtom, description);
   });
 
-  opacityTrickleDown(parent, [subtitleText, subtitleText]);
+  opacityTrickleDown(parent, [subtitleText, linkSwitch]);
 
   return socialIcon;
 }
