@@ -1,7 +1,9 @@
 import makeEmailIcon from "./components/EmailIcon";
+import makeProjectCard from "./components/ProjectCard";
 import makeSection from "./components/Section";
 import makeSkillIcon from "./components/SkillIcon";
 import makeSocialIcon from "./components/SocialIcon";
+import makeWorkExperienceCard from "./components/WorkExperienceCard";
 import { PALETTE } from "./constants";
 import makePlayer from "./entities/Player";
 import makeKaplayCtx from "./kaplayCtx";
@@ -12,6 +14,12 @@ export default async function initGame() {
   const generalData = await (await fetch("./configs/generalData.json")).json();
   const socialsData = await (await fetch("./configs/socialsData.json")).json();
   const skillsData = await (await fetch("./configs/skillsData.json")).json();
+  const experiencesData = await (
+    await fetch("./configs/experiencesData.json")
+  ).json();
+  const projectsData = await (
+    await fetch("./configs/projectsData.json")
+  ).json();
 
   const k = makeKaplayCtx(); // Initialize Kaplay context
 
@@ -42,6 +50,7 @@ export default async function initGame() {
   k.loadSprite("sonic-js", "./projects/sonic-js.png");
   k.loadSprite("kirby-ts", "./projects/kirby-ts.png");
   k.loadSprite("platformer-js", "./projects/platformer-js.png");
+  k.loadSprite("wip", "./projects/wip.png");
 
   //Star Sprite
   k.loadSprite("star-sprite", "./sprites/Star.png", {
@@ -101,9 +110,6 @@ export default async function initGame() {
   });
 
   //=============Creates the sections in the kplay view==============
-  // add rect, after section name if you're square ex:
-  // "rect",  Specify the shape as "rect" (square)
-  //   200  Size of the square (e.g., 200x200)
 
   // About =============================
   makeSection(
@@ -183,34 +189,55 @@ export default async function initGame() {
   makeSection(
     k,
     k.vec2(k.center().x + 450, k.center().y),
-    "Experience",
-    (parent) => {}
+    generalData.section3Name,
+    (parent) => {
+      const container = parent.add([k.opacity(0), k.pos(0)]);
+
+      for (const experienceData of experiencesData) {
+        makeWorkExperienceCard(
+          k,
+          container,
+          k.vec2(experienceData.pos.x, experienceData.pos.y),
+          experienceData.cardHeight,
+          experienceData.roleData
+        );
+      }
+
+      makeAppear(k, container);
+    }
   );
 
-  //Projects
+  //Projects====================================================
   makeSection(
+    k,
+    k.vec2(k.center().x, k.center().y + 400),
+    generalData.section4Name,
+    (parent) => {
+      const container = parent.add([k.opacity(0), k.pos(0, 0)]);
+
+      for (const project of projectsData) {
+        makeProjectCard(
+          k,
+          container,
+          k.vec2(project.pos.x, project.pos.y),
+          project.data,
+          project.thumbnail
+        );
+      }
+
+      makeAppear(k, container);
+    }
+  );
+
+  //=========================================================
+  /* // Joke API
+    makeSection(
     k,
     k.vec2(k.center().x, k.center().y + 450),
     "Projects",
     (parent) => {}
   );
-
-  /* // Joke API
-  makeSection(
-    k,
-    k.vec2(k.center().x - 550, k.center().y - 750),
-    "Joke Api",
-
-    {
-      style: "rect",
-      iconSprite: "Api",
-      iconScale: 0.4,
-      customColor: PALETTE.color3,
-    },
-    (parent) => {
-      const container = parent.add([k.pos(-805, -700), k.opacity(0)]);
-    }
-  ); */
+ */
 
   makePlayer(k, k.vec2(k.center()), 700); // has the player in the center
 }

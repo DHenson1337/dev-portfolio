@@ -1,0 +1,28 @@
+[
+  {
+    "pos": { "x": 150, "y": -100 },
+    "cardHeight": 250,
+    "roleData": {
+      "title": "Mern-Stack Student",
+      "description": "Successfully completed an intensive MERN stack training program focused on full-stack web development. \n Front-End Development: HTML, CSS, JavaScript, React.js. \n Back-End Development: Node.js, Express.js, MongoDB.",
+      "company": {
+        "name": "Per Scholas",
+        "startDate": "September 2024",
+        "endDate": "Present"
+      }
+    }
+  },
+  {
+    "pos": { "x": 150, "y": 180 },
+    "cardHeight": 250,
+    "roleData": {
+      "title": "ACCESSIONING TECHNICIAN",
+      "description": "Streamlined the medical testing process by utilizing Empire’s medical database to efficiently manage access to hundreds of blood samples, COVID swabs, and bioproducts daily from various medical facilities",
+      "company": {
+        "name": "PROFESSIONAL EXPERIENCE",
+        "startDate": "January 2022",
+        "endDate": "March 2023"
+      }
+    }
+  }
+]
