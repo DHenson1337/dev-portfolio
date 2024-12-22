@@ -32,3 +32,10 @@ export const store = createStore();
 //For Joke Modal
 export const isJokeModalVisibleAtom = atom(false);
 export const jokeDataAtom = atom({ setup: "", delivery: "" });
+
+//For Special Thanks Model
+export const isCreditsModalVisibleAtom = atom(false);
+export const creditsDataAtom = atom({
+  specialThanks: [],
+  technologies: [],
+});

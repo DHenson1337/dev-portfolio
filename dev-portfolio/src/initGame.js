@@ -6,11 +6,14 @@ import makeSocialIcon from "./components/SocialIcon";
 import makeWorkExperienceCard from "./components/WorkExperienceCard";
 import { PALETTE } from "./constants";
 import makePlayer from "./entities/Player";
+import { opacityTrickleDown } from "./utils";
 import makeKaplayCtx from "./kaplayCtx";
 import {
   cameraZoomValueAtom,
   jokeDataAtom,
   isJokeModalVisibleAtom,
+  creditsDataAtom,
+  isCreditsModalVisibleAtom,
   store,
 } from "./store";
 import { makeAppear } from "./utils";
@@ -19,6 +22,7 @@ export default async function initGame() {
   const generalData = await (await fetch("./configs/generalData.json")).json();
   const socialsData = await (await fetch("./configs/socialsData.json")).json();
   const skillsData = await (await fetch("./configs/skillsData.json")).json();
+  const creditsData = await (await fetch("./configs/creditsData.json")).json();
   const experiencesData = await (
     await fetch("./configs/experiencesData.json")
   ).json();
@@ -270,6 +274,43 @@ export default async function initGame() {
         makeAppear(k, container);
       } catch (error) {
         console.error("Error fetching joke:", error);
+      }
+    }
+  );
+
+  //Credits Section =====================================
+  makeSection(
+    k,
+    k.vec2(k.center().x + 550, k.center().y - 750),
+    "Credits",
+    async (parent) => {
+      const container = parent.add([k.opacity(0), k.pos(0, 0)]);
+
+      try {
+        const creditsData = await (
+          await fetch("./configs/creditsData.json")
+        ).json();
+
+        // Store the credits data
+        store.set(creditsDataAtom, creditsData);
+
+        // Show modal on collision
+        const creditsSwitch = container.add([
+          k.circle(30),
+          k.area(),
+          k.color(k.Color.fromHex(PALETTE.color1)),
+          k.pos(0, 0),
+          k.opacity(0),
+        ]);
+
+        creditsSwitch.onCollide("player", () => {
+          store.set(isCreditsModalVisibleAtom, true);
+        });
+
+        opacityTrickleDown(parent, [creditsSwitch]);
+        makeAppear(k, container);
+      } catch (error) {
+        console.error("Error loading credits:", error);
       }
     }
   );

@@ -3,6 +3,7 @@ import SocialModal from "./reactComponents/SocialModal";
 import EmailModal from "./reactComponents/EmailModal";
 import ProjectModal from "./reactComponents/ProjectModal";
 import JokeModal from "./reactComponents/JokeModal";
+import CreditsModal from "./reactComponents/CreditsModal";
 
 function ReactUI() {
   return (
@@ -13,6 +14,7 @@ function ReactUI() {
       <EmailModal />
       <ProjectModal />
       <JokeModal />
+      <CreditsModal />
     </>
   );
 }

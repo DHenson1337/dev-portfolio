@@ -60,9 +60,9 @@ This portfolio was inspired by the legendary guide by [JS Legend](https://www.yo
 
 ## 🏆 Acknowledgments
 
-- 🎥 Huge thanks to [JS Legend](https://www.youtube.com/@jslegend) for the inspiring guide!
+- 🎥 Huge thanks to [JS Legend](https://www.youtube.com/@JSLegendDev) for the inspiring guide!
 - 🌐 Shoutout to the **Kaplay.js** and **React.js** communities for their amazing resources.
-- 🎒 Thank you [JS Legend](https://sscary.itch.io/the-adventurer-male) for the Main Character Sprite!
+- 🎒 Thank you [Sscary](https://sscary.itch.io/the-adventurer-male) for the Main Character Sprite!
 - ⭐ Thank you [Narik](https://soulofkiran.itch.io/pixel-art-animated-star) for the Star Sprite!
 
 ---
