@@ -1,0 +1,55 @@
+{
+  "specialThanks": [
+    {
+      "name": "JS Legend",
+      "contribution": "For the inspiring guide and tutorial",
+      "link": "https://www.youtube.com/@JSLegendDev"
+    },
+    {
+      "name": "Sscary",
+      "contribution": "For the Main Character Sprite",
+      "link": "https://sscary.itch.io/the-adventurer-male"
+    },
+    {
+      "name": "Narik",
+      "contribution": "For being my star!",
+      "link": "https://soulofkiran.itch.io/pixel-art-animated-star"
+    },
+    {
+      "name": "Pelatho",
+      "contribution": "For helping me hear defeat!",
+      "link": "https://thowsenmedia.itch.io/video-game-footstep-sound-pack"
+    },
+    {
+      "name": "EpeSami",
+      "contribution": "For helping me to hear the right things!",
+      "link": "https://epesami.itch.io/collision-audio-pack"
+    }
+  ],
+  "technologies": [
+    {
+      "name": "Kaplay.js",
+      "description": "Game framework for 2D interactivity"
+    },
+    {
+      "name": "React.js",
+      "description": "Framework for building reusable components"
+    },
+    {
+      "name": "HTML/CSS",
+      "description": "Structure and styling of the portfolio"
+    },
+    {
+      "name": "GLSL Shaders",
+      "description": "Create a background for the game"
+    },
+    {
+      "name": "Git & GitHub",
+      "description": "Version control and databack"
+    },
+    {
+      "name": "Jotai",
+      "description": "Connecting React with Kaplay"
+    }
+  ]
+}
