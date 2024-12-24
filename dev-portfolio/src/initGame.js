@@ -80,45 +80,77 @@ export default async function initGame() {
   // Import Shaders
   k.loadShaderURL("tiledPattern", null, "shaders/tiledPattern.frag");
 
-  //Camera Zoom
-
-  if (k.width() < 1000) {
-    store.set(cameraZoomValueAtom, 0.5);
-    k.setCamScale(k.vec2(0.5));
-
-    return;
-  } else {
-    store.set(cameraZoomValueAtom, 0.8);
-    k.setCamScale(k.vec2(0.8));
-  }
-
-  k.onUpdate(() => {
-    const camZoomValue = store.get(cameraZoomValueAtom);
-    if (camZoomValue !== k.getCamScale()) k.setCamScale(k.vec2(camZoomValue));
+  // Get actual viewport dimensions
+  const getViewportSize = () => ({
+    width: Math.max(
+      document.documentElement.clientWidth || 0,
+      window.innerWidth || 0
+    ),
+    height: Math.max(
+      document.documentElement.clientHeight || 0,
+      window.innerHeight || 0
+    ),
   });
 
-  //Displays the ShaderBackground
+  //Camera Zoom
+  const setAppropriateZoom = () => {
+    const { width, height } = getViewportSize();
+    if (width < 1000) {
+      store.set(cameraZoomValueAtom, Math.min((width / 1000) * 0.5, 0.5));
+      k.setCamScale(k.vec2(store.get(cameraZoomValueAtom)));
+    } else {
+      store.set(cameraZoomValueAtom, 0.8);
+      k.setCamScale(k.vec2(0.8));
+    }
+  };
+
+  setAppropriateZoom();
+  window.addEventListener("resize", setAppropriateZoom);
+  window.addEventListener("orientationchange", setAppropriateZoom);
+
+  // camera update listener
+  k.onUpdate(() => {
+    const camZoomValue = store.get(cameraZoomValueAtom);
+    if (camZoomValue !== k.getCamScale().x) {
+      k.setCamScale(k.vec2(camZoomValue));
+    }
+  });
+
+  setAppropriateZoom();
+  window.addEventListener("resize", setAppropriateZoom);
+  window.addEventListener("orientationchange", setAppropriateZoom);
+
+  // Displays the ShaderBackground
   const tiledBackground = k.add([
-    k.uvquad(k.width(), k.height()),
+    k.uvquad(getViewportSize().width, getViewportSize().height),
     k.shader("tiledPattern", () => ({
-      u_time: k.time() / 25, // Changed from /20 to /10 for faster animation
+      u_time: k.time() / 25,
       u_color1: k.Color.fromHex(PALETTE.color3),
       u_color2: k.Color.fromHex(PALETTE.color2),
-      u_speed: k.vec2(0.5, -1.0), // Changed from (1, -1) for different flow
-      u_aspect: k.width() / k.height(),
-      u_size: 5, // Changed from 5 for different density
+      u_speed: k.vec2(0.5, -1.0),
+      u_aspect: getViewportSize().width / getViewportSize().height,
+      u_size: 5,
     })),
     k.pos(0),
     k.z(0),
     k.fixed(),
   ]);
 
-  //Resizes the squares when the aspect ratio changes
-  k.onResize(() => {
-    tiledBackground.width = k.width();
-    tiledBackground.height = k.height();
-    tiledBackground.uniform.u_aspect = k.width() / k.height();
-  });
+  // Combined resize handler
+  const handleResize = () => {
+    const { width, height } = getViewportSize();
+    tiledBackground.width = width;
+    tiledBackground.height = height;
+    tiledBackground.uniform.u_aspect = width / height;
+  };
+
+  // Add multiple event listeners to catch all resize scenarios
+  window.addEventListener("resize", handleResize);
+  window.addEventListener("orientationchange", handleResize);
+  k.onResize(handleResize);
+
+  // Initial size setup
+  handleResize();
 
   //=============Creates the sections in the kplay view==============
 
