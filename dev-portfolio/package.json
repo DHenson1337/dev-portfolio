@@ -10,7 +10,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "vite-plugin-gh-pages"
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "jotai": "^2.10.0",

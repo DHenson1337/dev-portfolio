@@ -56,10 +56,10 @@ export default async function initGame() {
   k.loadSprite("python-logo", "./logos/python-logo.png");
   k.loadSprite("email-logo", "./logos/email-logo.png");
   k.loadSprite("Api", "./logos/Api.png");
-  k.loadSprite("sonic-js", "./projects/sonic-js.png");
-  k.loadSprite("kirby-ts", "./projects/kirby-ts.png");
-  k.loadSprite("platformer-js", "./projects/platformer-js.png");
-  k.loadSprite("wip", "./projects/wip.png");
+  //Projects
+  k.loadSprite("apple", "./projects/appleGame.png");
+  k.loadSprite("mgs", "./projects/miniGameSite.png");
+  k.loadSprite("skyCast", "./projects/skyCast.png");
   //Audio
   k.loadSound("walk", "./sounds/walk.wav");
   k.loadSound("collision", "./sounds/collision.ogg");
