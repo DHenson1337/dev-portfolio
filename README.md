@@ -71,7 +71,7 @@ This portfolio was inspired by the legendary guide by [JS Legend](https://www.yo
 
 ## 🌐 Link to Portfolio
 
-🛠️ **Pending**: The live link will be available soon.
+https://dhenson1337.github.io/dev-portfolio/
 
 ---
 
