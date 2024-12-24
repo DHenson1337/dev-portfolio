@@ -1,57 +1,57 @@
 [
   {
     "pos": { "x": 0, "y": 350 },
-    "thumbnail": "wip",
+    "thumbnail": "apple",
     "data": {
-      "title": "Work-In-Progress",
+      "title": "Phaser-Apple Catching Game \n JS/Phaser",
       "links": [
         {
           "id": 0,
-          "name": "Live Demo(WIP)",
+          "name": "Live Demo (N/A)",
           "link": "/"
         },
         {
           "id": 1,
           "name": "Source Code",
-          "link": "/"
+          "link": "https://github.com/DHenson1337/Phaser-Apple-Game"
         }
       ]
     }
   },
   {
     "pos": { "x": 0, "y": 840 },
-    "thumbnail": "wip",
+    "thumbnail": "skyCast",
     "data": {
-      "title": "Work-In-Progress",
+      "title": "SkyCast (My First Website) \n Html/CSS",
       "links": [
         {
           "id": 0,
           "name": "Live Demo",
-          "link": "/"
+          "link": "https://dhenson1337.github.io/SBA307-Sky-Cast/"
         },
         {
           "id": 1,
           "name": "Source Code",
-          "link": "/"
+          "link": "https://github.com/DHenson1337/SBA307-Sky-Cast"
         }
       ]
     }
   },
   {
     "pos": { "x": 0, "y": 1320 },
-    "thumbnail": "wip",
+    "thumbnail": "mgs",
     "data": {
-      "title": "Phaser-Apple Catching Game",
+      "title": "MiniGame Website \n JS/MongoDB/Express",
       "links": [
         {
           "id": 0,
-          "name": "Live Demo",
+          "name": "Live Demo (N/A)",
           "link": "/"
         },
         {
           "id": 1,
           "name": "Source Code",
-          "link": "/"
+          "link": "https://github.com/DHenson1337/SBA-316-Mini-Game-Website"
         }
       ]
     }
