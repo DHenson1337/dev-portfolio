@@ -29,6 +29,9 @@ export default async function initGame() {
   const projectsData = await (
     await fetch("./configs/projectsData.json")
   ).json();
+  const gameProjectsData = await (
+    await fetch("./configs/gameProjectsData.json")
+  ).json();
 
   const k = makeKaplayCtx(); // Initialize Kaplay context
 
@@ -157,7 +160,7 @@ export default async function initGame() {
   // About =============================
   makeSection(
     k,
-    k.vec2(k.center().x, k.center().y - 450),
+    k.vec2(k.center().x, k.center().y - 400),
     generalData.section1Name,
     (parent) => {
       const container = parent.add([k.pos(-805, -700), k.opacity(0)]);
@@ -210,7 +213,7 @@ export default async function initGame() {
   //Skills ==============================================
   makeSection(
     k,
-    k.vec2(k.center().x - 450, k.center().y),
+    k.vec2(k.center().x - 600, k.center().y),
     generalData.section2Name,
     (parent) => {
       const container = parent.add([k.opacity(0), k.pos(-300, 0)]);
@@ -231,7 +234,7 @@ export default async function initGame() {
   //Experience==========================================
   makeSection(
     k,
-    k.vec2(k.center().x + 450, k.center().y),
+    k.vec2(k.center().x + 600, k.center().y),
     generalData.section3Name,
     (parent) => {
       const container = parent.add([k.opacity(0), k.pos(0)]);
@@ -253,7 +256,7 @@ export default async function initGame() {
   //Projects====================================================
   makeSection(
     k,
-    k.vec2(k.center().x, k.center().y + 400),
+    k.vec2(k.center().x - 400, k.center().y + 500),
     generalData.section4Name,
     (parent) => {
       const container = parent.add([k.opacity(0), k.pos(0, 0)]);
@@ -275,7 +278,7 @@ export default async function initGame() {
   //Joke API=========================================================
   makeSection(
     k,
-    k.vec2(k.center().x - 450, k.center().y - 800),
+    k.vec2(k.center().x - 750, k.center().y - 750),
     "Want a Joke?",
     async (parent) => {
       const container = parent.add([k.opacity(0), k.pos(0, 0)]);
@@ -344,7 +347,7 @@ export default async function initGame() {
   //Credits Section =====================================
   makeSection(
     k,
-    k.vec2(k.center().x + 550, k.center().y - 750),
+    k.vec2(k.center().x + 750, k.center().y - 750),
     "Credits",
     async (parent) => {
       const container = parent.add([k.opacity(0), k.pos(0, 0)]);
@@ -376,6 +379,29 @@ export default async function initGame() {
       } catch (error) {
         console.error("Error loading credits:", error);
       }
+    }
+  );
+
+  //Game Projects =================================================
+
+  makeSection(
+    k,
+    k.vec2(k.center().x + 400, k.center().y + 500), // Positioned to the right of Projects
+    "Game Projects",
+    (parent) => {
+      const container = parent.add([k.opacity(0), k.pos(0, 0)]);
+
+      for (const project of gameProjectsData) {
+        makeProjectCard(
+          k,
+          container,
+          k.vec2(project.pos.x, project.pos.y),
+          project.data,
+          project.thumbnail
+        );
+      }
+
+      makeAppear(k, container);
     }
   );
 

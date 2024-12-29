@@ -1,3 +1,9 @@
 npm run build
 npm run deploy 
-To update the website
+To update the website 
+
+
+If there is an error when deployed that doesn't exisit in main, do this.
+rm -rf dist
+npm run build
+npm run deploy 
