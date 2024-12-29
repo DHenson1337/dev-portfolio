@@ -66,6 +66,10 @@ export default async function initGame() {
   //Audio
   k.loadSound("walk", "./sounds/walk.wav");
   k.loadSound("collision", "./sounds/collision.ogg");
+  k.loadSound(
+    "bgm",
+    "./sounds/Earthbound - Battle Against a Weird Opponent.mp3"
+  );
   //Star Sprite
   k.loadSprite("star-sprite", "./sprites/Star.png", {
     sliceX: 13,
@@ -99,11 +103,11 @@ export default async function initGame() {
   const setAppropriateZoom = () => {
     const { width, height } = getViewportSize();
     if (width < 1000) {
-      store.set(cameraZoomValueAtom, Math.min((width / 1000) * 0.5, 0.5));
+      store.set(cameraZoomValueAtom, Math.min((width / 1000) * 0.3, 0.3));
       k.setCamScale(k.vec2(store.get(cameraZoomValueAtom)));
     } else {
-      store.set(cameraZoomValueAtom, 0.8);
-      k.setCamScale(k.vec2(0.8));
+      store.set(cameraZoomValueAtom, 0.6);
+      k.setCamScale(k.vec2(0.6));
     }
   };
 
@@ -154,6 +158,32 @@ export default async function initGame() {
 
   // Initial size setup
   handleResize();
+
+  // Background Music
+  const bgMusic = k.play("bgm", {
+    volume: 0.2,
+    loop: true,
+  });
+
+  //Music Control
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "m") {
+      bgMusic.paused = !bgMusic.paused;
+    }
+  });
+
+  const musicBtn = k.add([
+    k.text("🔊", { size: 24 }),
+    k.pos(k.width() - 50, 20),
+    k.area(),
+    k.fixed(),
+    "musicToggle",
+  ]);
+
+  musicBtn.onClick(() => {
+    bgMusic.paused = !bgMusic.paused;
+    musicBtn.text = bgMusic.paused ? "🔈" : "🔊";
+  });
 
   //=============Creates the sections in the kplay view==============
 

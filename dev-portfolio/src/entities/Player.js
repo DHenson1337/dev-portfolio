@@ -11,7 +11,7 @@ export default function makePlayer(k, posVec2, speed) {
   //Sound initialization
   let isWalkingSoundPlaying = false;
   const walkSound = k.play("walk", {
-    volume: 0.018,
+    volume: 0.058,
     loop: true,
     paused: true,
     speed: 0.69,
