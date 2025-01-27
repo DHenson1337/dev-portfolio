@@ -1,19 +1,19 @@
 [
   {
     "pos": { "x": 0, "y": 350 },
-    "thumbnail": "apple",
+    "thumbnail": "mgp",
     "data": {
-      "title": "Phaser-Apple Catching Game \n JS/Phaser",
+      "title": "Mini-Game-PlayGround \n Mern Full Stack Application",
       "links": [
         {
           "id": 0,
-          "name": "Live Demo (N/A)",
-          "link": "/"
+          "name": "Live Demo",
+          "link": "https://mini-game-playground.netlify.app/"
         },
         {
           "id": 1,
           "name": "Source Code",
-          "link": "https://github.com/DHenson1337/Phaser-Apple-Game"
+          "link": "https://github.com/DHenson1337/mini-game-playground-client"
         }
       ]
     }
