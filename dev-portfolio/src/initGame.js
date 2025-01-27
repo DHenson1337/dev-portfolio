@@ -63,6 +63,7 @@ export default async function initGame() {
   k.loadSprite("apple", "./projects/appleGame.png");
   k.loadSprite("mgs", "./projects/miniGameSite.png");
   k.loadSprite("skyCast", "./projects/skyCast.png");
+  k.loadSprite("mgp", "./projects/mgp.png");
   //Audio
   k.loadSound("walk", "./sounds/walk.wav");
   k.loadSound("collision", "./sounds/collision.ogg");
